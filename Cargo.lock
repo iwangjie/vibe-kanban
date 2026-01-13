@@ -399,7 +399,7 @@ dependencies = [
  "http 0.2.12",
  "http 1.4.0",
  "http-body 0.4.6",
- "lru",
+ "lru 0.12.5",
  "percent-encoding",
  "regex-lite",
  "sha2",
@@ -1003,12 +1003,13 @@ dependencies = [
 
 [[package]]
 name = "codex-app-server-protocol"
-version = "0.71.0"
-source = "git+https://github.com/openai/codex.git?rev=565488c15b8969694ec52cda3d6fcc99655a972f#565488c15b8969694ec52cda3d6fcc99655a972f"
+version = "0.80.0"
+source = "git+https://github.com/openai/codex.git?rev=f0679a6ab2563135e01cc922698cb54921a1719f#f0679a6ab2563135e01cc922698cb54921a1719f"
 dependencies = [
  "anyhow",
  "clap",
  "codex-protocol",
+ "codex-utils-absolute-path",
  "mcp-types",
  "schemars 0.8.22",
  "serde",
@@ -1021,8 +1022,8 @@ dependencies = [
 
 [[package]]
 name = "codex-git"
-version = "0.71.0"
-source = "git+https://github.com/openai/codex.git?rev=565488c15b8969694ec52cda3d6fcc99655a972f#565488c15b8969694ec52cda3d6fcc99655a972f"
+version = "0.80.0"
+source = "git+https://github.com/openai/codex.git?rev=f0679a6ab2563135e01cc922698cb54921a1719f#f0679a6ab2563135e01cc922698cb54921a1719f"
 dependencies = [
  "once_cell",
  "regex",
@@ -1036,10 +1037,11 @@ dependencies = [
 
 [[package]]
 name = "codex-protocol"
-version = "0.71.0"
-source = "git+https://github.com/openai/codex.git?rev=565488c15b8969694ec52cda3d6fcc99655a972f#565488c15b8969694ec52cda3d6fcc99655a972f"
+version = "0.80.0"
+source = "git+https://github.com/openai/codex.git?rev=f0679a6ab2563135e01cc922698cb54921a1719f#f0679a6ab2563135e01cc922698cb54921a1719f"
 dependencies = [
  "codex-git",
+ "codex-utils-absolute-path",
  "codex-utils-image",
  "icu_decimal",
  "icu_locale_core",
@@ -1059,19 +1061,30 @@ dependencies = [
 ]
 
 [[package]]
-name = "codex-utils-cache"
-version = "0.71.0"
-source = "git+https://github.com/openai/codex.git?rev=565488c15b8969694ec52cda3d6fcc99655a972f#565488c15b8969694ec52cda3d6fcc99655a972f"
+name = "codex-utils-absolute-path"
+version = "0.80.0"
+source = "git+https://github.com/openai/codex.git?rev=f0679a6ab2563135e01cc922698cb54921a1719f#f0679a6ab2563135e01cc922698cb54921a1719f"
 dependencies = [
- "lru",
+ "path-absolutize",
+ "schemars 0.8.22",
+ "serde",
+ "ts-rs 11.1.0",
+]
+
+[[package]]
+name = "codex-utils-cache"
+version = "0.80.0"
+source = "git+https://github.com/openai/codex.git?rev=f0679a6ab2563135e01cc922698cb54921a1719f#f0679a6ab2563135e01cc922698cb54921a1719f"
+dependencies = [
+ "lru 0.16.3",
  "sha1",
  "tokio",
 ]
 
 [[package]]
 name = "codex-utils-image"
-version = "0.71.0"
-source = "git+https://github.com/openai/codex.git?rev=565488c15b8969694ec52cda3d6fcc99655a972f#565488c15b8969694ec52cda3d6fcc99655a972f"
+version = "0.80.0"
+source = "git+https://github.com/openai/codex.git?rev=f0679a6ab2563135e01cc922698cb54921a1719f#f0679a6ab2563135e01cc922698cb54921a1719f"
 dependencies = [
  "base64",
  "codex-utils-cache",
@@ -1951,6 +1964,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d9c4f5dac5e15c24eb999c26181a6ca40b39fe946cbe4c263c7209467bc83af2"
 
 [[package]]
+name = "foldhash"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "77ce24cb58228fbb8aa041425bb1050850ac19177686ea6e0f41a70416f56fdb"
+
+[[package]]
 name = "fork_stream"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2239,7 +2258,7 @@ checksum = "9229cfe53dfd69f0609a49f65461bd93001ea1ef889cd5529dd176593f5338a1"
 dependencies = [
  "allocator-api2",
  "equivalent",
- "foldhash",
+ "foldhash 0.1.5",
 ]
 
 [[package]]
@@ -2247,6 +2266,11 @@ name = "hashbrown"
 version = "0.16.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "841d1cc9bed7f9236f321df977030373f4a4163ae1a7dbfe1a51a2c1a51d9100"
+dependencies = [
+ "allocator-api2",
+ "equivalent",
+ "foldhash 0.2.0",
+]
 
 [[package]]
 name = "hashlink"
@@ -3036,6 +3060,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "lru"
+version = "0.16.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a1dc47f592c06f33f8e3aea9591776ec7c9f9e4124778ff8a3c3b87159f7e593"
+dependencies = [
+ "hashbrown 0.16.1",
+]
+
+[[package]]
 name = "mac-notification-sys"
 version = "0.6.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3064,8 +3097,8 @@ checksum = "47e1ffaa40ddd1f3ed91f717a33c8c0ee23fff369e3aa8772b9605cc1d22f4c3"
 
 [[package]]
 name = "mcp-types"
-version = "0.71.0"
-source = "git+https://github.com/openai/codex.git?rev=565488c15b8969694ec52cda3d6fcc99655a972f#565488c15b8969694ec52cda3d6fcc99655a972f"
+version = "0.80.0"
+source = "git+https://github.com/openai/codex.git?rev=f0679a6ab2563135e01cc922698cb54921a1719f#f0679a6ab2563135e01cc922698cb54921a1719f"
 dependencies = [
  "schemars 0.8.22",
  "serde",
@@ -3667,6 +3700,24 @@ name = "paste"
 version = "1.0.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "57c0d7b74b563b49d38dae00a0c37d4d6de9b432382b2892f0574ddcae73fd0a"
+
+[[package]]
+name = "path-absolutize"
+version = "3.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e4af381fe79fa195b4909485d99f73a80792331df0625188e707854f0b3383f5"
+dependencies = [
+ "path-dedot",
+]
+
+[[package]]
+name = "path-dedot"
+version = "3.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "07ba0ad7e047712414213ff67533e6dd477af0a4e1d14fb52343e53d30ea9397"
+dependencies = [
+ "once_cell",
+]
 
 [[package]]
 name = "pathdiff"

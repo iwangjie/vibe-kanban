@@ -655,6 +655,7 @@ pub fn normalize_logs(msg_store: Arc<MsgStore>, worktree_path: &Path) {
                 EventMsg::StreamError(StreamErrorEvent {
                     message,
                     codex_error_info,
+                    ..
                 }) => {
                     add_normalized_entry(
                         &msg_store,
@@ -1011,7 +1012,10 @@ pub fn normalize_logs(msg_store: Arc<MsgStore>, worktree_path: &Path) {
                 | EventMsg::ExitedReviewMode(..)
                 | EventMsg::TerminalInteraction(..)
                 | EventMsg::ElicitationRequest(..)
-                | EventMsg::TaskComplete(..) => {}
+                | EventMsg::TaskComplete(..)
+                | EventMsg::ThreadRolledBack(..)
+                | EventMsg::ListSkillsResponse(..)
+                | EventMsg::SkillsUpdateAvailable => {}
             }
         }
     });
